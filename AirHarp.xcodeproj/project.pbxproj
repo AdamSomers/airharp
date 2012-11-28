@@ -1,0 +1,253 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		663730C91664B0D6008555B5 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 663730C21664B0D6008555B5 /* OpenGL.framework */; };
+		663730CA1664B0D6008555B5 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 663730C31664B0D6008555B5 /* GLUT.framework */; };
+		663730CB1664B0D6008555B5 /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 663730C41664B0D6008555B5 /* CoreMIDI.framework */; };
+		663730CC1664B0D6008555B5 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 663730C51664B0D6008555B5 /* AppKit.framework */; };
+		663730CD1664B0D6008555B5 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 663730C61664B0D6008555B5 /* CoreAudio.framework */; };
+		663730CE1664B0D6008555B5 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 663730C71664B0D6008555B5 /* CoreFoundation.framework */; };
+		663730CF1664B0D6008555B5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 663730C81664B0D6008555B5 /* Foundation.framework */; };
+		667118261665FD27005CBAEE /* GLstuff.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 667118231665FD27005CBAEE /* GLstuff.cpp */; };
+		667118271665FD27005CBAEE /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 667118251665FD27005CBAEE /* main.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		663730B31664B091008555B5 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		663730B51664B091008555B5 /* AirHarp */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = AirHarp; sourceTree = BUILT_PRODUCTS_DIR; };
+		663730C21664B0D6008555B5 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		663730C31664B0D6008555B5 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
+		663730C41664B0D6008555B5 /* CoreMIDI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMIDI.framework; path = System/Library/Frameworks/CoreMIDI.framework; sourceTree = SDKROOT; };
+		663730C51664B0D6008555B5 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		663730C61664B0D6008555B5 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		663730C71664B0D6008555B5 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		663730C81664B0D6008555B5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		667118231665FD27005CBAEE /* GLstuff.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GLstuff.cpp; sourceTree = "<group>"; };
+		667118241665FD27005CBAEE /* GLStuff.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLStuff.h; sourceTree = "<group>"; };
+		667118251665FD27005CBAEE /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		663730B21664B091008555B5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				663730C91664B0D6008555B5 /* OpenGL.framework in Frameworks */,
+				663730CA1664B0D6008555B5 /* GLUT.framework in Frameworks */,
+				663730CB1664B0D6008555B5 /* CoreMIDI.framework in Frameworks */,
+				663730CC1664B0D6008555B5 /* AppKit.framework in Frameworks */,
+				663730CD1664B0D6008555B5 /* CoreAudio.framework in Frameworks */,
+				663730CE1664B0D6008555B5 /* CoreFoundation.framework in Frameworks */,
+				663730CF1664B0D6008555B5 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		663730AA1664B091008555B5 = {
+			isa = PBXGroup;
+			children = (
+				667118221665FD27005CBAEE /* src */,
+				663730B61664B091008555B5 /* Products */,
+				663730E41665F86D008555B5 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		663730B61664B091008555B5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				663730B51664B091008555B5 /* AirHarp */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		663730E41665F86D008555B5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				663730C21664B0D6008555B5 /* OpenGL.framework */,
+				663730C31664B0D6008555B5 /* GLUT.framework */,
+				663730C41664B0D6008555B5 /* CoreMIDI.framework */,
+				663730C51664B0D6008555B5 /* AppKit.framework */,
+				663730C61664B0D6008555B5 /* CoreAudio.framework */,
+				663730C71664B0D6008555B5 /* CoreFoundation.framework */,
+				663730C81664B0D6008555B5 /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		667118221665FD27005CBAEE /* src */ = {
+			isa = PBXGroup;
+			children = (
+				667118231665FD27005CBAEE /* GLstuff.cpp */,
+				667118241665FD27005CBAEE /* GLStuff.h */,
+				667118251665FD27005CBAEE /* main.cpp */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		663730B41664B091008555B5 /* AirHarp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 663730BF1664B091008555B5 /* Build configuration list for PBXNativeTarget "AirHarp" */;
+			buildPhases = (
+				663730B11664B091008555B5 /* Sources */,
+				663730B21664B091008555B5 /* Frameworks */,
+				663730B31664B091008555B5 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AirHarp;
+			productName = AirHarp;
+			productReference = 663730B51664B091008555B5 /* AirHarp */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		663730AC1664B091008555B5 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0450;
+			};
+			buildConfigurationList = 663730AF1664B091008555B5 /* Build configuration list for PBXProject "AirHarp" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 663730AA1664B091008555B5;
+			productRefGroup = 663730B61664B091008555B5 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				663730B41664B091008555B5 /* AirHarp */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		663730B11664B091008555B5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				667118261665FD27005CBAEE /* GLstuff.cpp in Sources */,
+				667118271665FD27005CBAEE /* main.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		663730BD1664B091008555B5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		663730BE1664B091008555B5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		663730C01664B091008555B5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		663730C11664B091008555B5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		663730AF1664B091008555B5 /* Build configuration list for PBXProject "AirHarp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				663730BD1664B091008555B5 /* Debug */,
+				663730BE1664B091008555B5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		663730BF1664B091008555B5 /* Build configuration list for PBXNativeTarget "AirHarp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				663730C01664B091008555B5 /* Debug */,
+				663730C11664B091008555B5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 663730AC1664B091008555B5 /* Project object */;
+}
