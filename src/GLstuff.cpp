@@ -1,10 +1,13 @@
 #include "GLStuff.h"
-//#include "Harp.h"
+#include "Harp.h"
 
 #include <cmath>
 
 namespace GLStuff
 {
+    
+    const int notes[] = { 32, 34, 37, 39, 41, 44, 46, 49, 51, 53 };
+    
    std::deque<GLDisplay*> gDisplays;
 
 //-----------------------------------------------------------------------------
@@ -267,7 +270,7 @@ void mouseFunc( int button, int state, int x, int y )
 {
     gMouseOriginX = x;
     gMouseOriginY = y;
-    
+
    if( button == GLUT_LEFT_BUTTON )
    {
       // rotate
@@ -293,6 +296,18 @@ void motionFunc(int x, int y )
 {   
    if (gLeftButtondown)
    {
+       int numStrings = Harp::GetInstance()->GetNumStrings();
+       int columnWidth = gWidth / numStrings;
+       for (int i = 0; i < numStrings; ++i)
+       {
+           int threshold = (columnWidth * i) + (columnWidth / 2);
+           if ((gMouseOriginX <= threshold && x > threshold) ||
+               (gMouseOriginX > threshold && x <= threshold))
+           {
+               printf("trig\n");
+               Harp::GetInstance()->NoteOn(notes[i], 30);
+           }
+       }
    }
    
    gMouseOriginX = x;
@@ -301,16 +316,28 @@ void motionFunc(int x, int y )
 
 void displayFunc( )
 {
-   
    static GLfloat x = 0.0f;
-	
+    
    // clear the color and depth buffers
    glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+    go2d();
     
     glColor4f(1,1,1,1);
 
+    glLineWidth(2);
+    
+    int numStrings = Harp::GetInstance()->GetNumStrings();
+    int columnWidth = gWidth / numStrings;
+    for (int i = 0; i < numStrings; ++i)
+    {
+        int x = (columnWidth * i) + (columnWidth / 2);
+        glBegin(GL_LINE_LOOP);//start drawing a line loop
+        glVertex2i(x,0);//left of window
+        glVertex2i(x,gHeight);//bottom of window
+        glEnd();//end drawing of line loop
+    }
+
 	glPushMatrix();
-    go2d();
 	glTranslatef(gMouseOriginX,gHeight - gMouseOriginY,100);
     glutSolidSphere(100, 100, 100);
     

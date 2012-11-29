@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6625077D1665FFB700AC797A /* AudioClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6625076B1665FFB700AC797A /* AudioClient.cpp */; };
+		6625077E1665FFB700AC797A /* AudioServer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6625076D1665FFB700AC797A /* AudioServer.cpp */; };
+		6625077F1665FFB700AC797A /* Interpolators.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6625076F1665FFB700AC797A /* Interpolators.cpp */; };
+		662507801665FFB700AC797A /* ParameterAPI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 662507731665FFB700AC797A /* ParameterAPI.cpp */; };
+		662507811665FFB700AC797A /* Waveshaper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 662507791665FFB700AC797A /* Waveshaper.cpp */; };
+		662507821665FFB700AC797A /* WindowFunction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6625077B1665FFB700AC797A /* WindowFunction.cpp */; };
+		6625078B1665FFCE00AC797A /* chuck_fft.c in Sources */ = {isa = PBXBuildFile; fileRef = 662507841665FFCE00AC797A /* chuck_fft.c */; };
+		6625078C1665FFCE00AC797A /* RtAudio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 662507861665FFCE00AC797A /* RtAudio.cpp */; };
+		6625078D1665FFCE00AC797A /* RtMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 662507891665FFCE00AC797A /* RtMidi.cpp */; };
+		662507A1166605E200AC797A /* Harp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6625079F166605E200AC797A /* Harp.cpp */; };
 		663730C91664B0D6008555B5 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 663730C21664B0D6008555B5 /* OpenGL.framework */; };
 		663730CA1664B0D6008555B5 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 663730C31664B0D6008555B5 /* GLUT.framework */; };
 		663730CB1664B0D6008555B5 /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 663730C41664B0D6008555B5 /* CoreMIDI.framework */; };
@@ -31,6 +41,33 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		6625076B1665FFB700AC797A /* AudioClient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AudioClient.cpp; sourceTree = "<group>"; };
+		6625076C1665FFB700AC797A /* AudioClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioClient.h; sourceTree = "<group>"; };
+		6625076D1665FFB700AC797A /* AudioServer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AudioServer.cpp; sourceTree = "<group>"; };
+		6625076E1665FFB700AC797A /* AudioServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioServer.h; sourceTree = "<group>"; };
+		6625076F1665FFB700AC797A /* Interpolators.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Interpolators.cpp; sourceTree = "<group>"; };
+		662507701665FFB700AC797A /* Interpolators.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Interpolators.h; sourceTree = "<group>"; };
+		662507711665FFB700AC797A /* MathHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MathHelpers.h; sourceTree = "<group>"; };
+		662507721665FFB700AC797A /* MidiServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MidiServer.h; sourceTree = "<group>"; };
+		662507731665FFB700AC797A /* ParameterAPI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ParameterAPI.cpp; sourceTree = "<group>"; };
+		662507741665FFB700AC797A /* ParameterAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParameterAPI.h; sourceTree = "<group>"; };
+		662507751665FFB700AC797A /* Poly.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Poly.h; sourceTree = "<group>"; };
+		662507761665FFB700AC797A /* SignalGenerators.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignalGenerators.h; sourceTree = "<group>"; };
+		662507771665FFB700AC797A /* TypingKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TypingKeyboard.h; sourceTree = "<group>"; };
+		662507781665FFB700AC797A /* Voices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Voices.h; sourceTree = "<group>"; };
+		662507791665FFB700AC797A /* Waveshaper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Waveshaper.cpp; sourceTree = "<group>"; };
+		6625077A1665FFB700AC797A /* Waveshaper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Waveshaper.h; sourceTree = "<group>"; };
+		6625077B1665FFB700AC797A /* WindowFunction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WindowFunction.cpp; sourceTree = "<group>"; };
+		6625077C1665FFB700AC797A /* WindowFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WindowFunction.h; sourceTree = "<group>"; };
+		662507841665FFCE00AC797A /* chuck_fft.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = chuck_fft.c; sourceTree = "<group>"; };
+		662507851665FFCE00AC797A /* chuck_fft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chuck_fft.h; sourceTree = "<group>"; };
+		662507861665FFCE00AC797A /* RtAudio.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RtAudio.cpp; sourceTree = "<group>"; };
+		662507871665FFCE00AC797A /* RtAudio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RtAudio.h; sourceTree = "<group>"; };
+		662507881665FFCE00AC797A /* RtError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RtError.h; sourceTree = "<group>"; };
+		662507891665FFCE00AC797A /* RtMidi.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RtMidi.cpp; sourceTree = "<group>"; };
+		6625078A1665FFCE00AC797A /* RtMidi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RtMidi.h; sourceTree = "<group>"; };
+		6625079F166605E200AC797A /* Harp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Harp.cpp; sourceTree = "<group>"; };
+		662507A0166605E200AC797A /* Harp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Harp.h; sourceTree = "<group>"; };
 		663730B51664B091008555B5 /* AirHarp */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = AirHarp; sourceTree = BUILT_PRODUCTS_DIR; };
 		663730C21664B0D6008555B5 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		663730C31664B0D6008555B5 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
@@ -62,9 +99,60 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		662507681665FFA400AC797A /* muskit */ = {
+			isa = PBXGroup;
+			children = (
+				662507831665FFCE00AC797A /* ThirdParty */,
+				6625076A1665FFB700AC797A /* src */,
+			);
+			name = muskit;
+			sourceTree = "<group>";
+		};
+		6625076A1665FFB700AC797A /* src */ = {
+			isa = PBXGroup;
+			children = (
+				6625076B1665FFB700AC797A /* AudioClient.cpp */,
+				6625076C1665FFB700AC797A /* AudioClient.h */,
+				6625076D1665FFB700AC797A /* AudioServer.cpp */,
+				6625076E1665FFB700AC797A /* AudioServer.h */,
+				6625076F1665FFB700AC797A /* Interpolators.cpp */,
+				662507701665FFB700AC797A /* Interpolators.h */,
+				662507711665FFB700AC797A /* MathHelpers.h */,
+				662507721665FFB700AC797A /* MidiServer.h */,
+				662507731665FFB700AC797A /* ParameterAPI.cpp */,
+				662507741665FFB700AC797A /* ParameterAPI.h */,
+				662507751665FFB700AC797A /* Poly.h */,
+				662507761665FFB700AC797A /* SignalGenerators.h */,
+				662507771665FFB700AC797A /* TypingKeyboard.h */,
+				662507781665FFB700AC797A /* Voices.h */,
+				662507791665FFB700AC797A /* Waveshaper.cpp */,
+				6625077A1665FFB700AC797A /* Waveshaper.h */,
+				6625077B1665FFB700AC797A /* WindowFunction.cpp */,
+				6625077C1665FFB700AC797A /* WindowFunction.h */,
+			);
+			name = src;
+			path = ../muskit/src;
+			sourceTree = "<group>";
+		};
+		662507831665FFCE00AC797A /* ThirdParty */ = {
+			isa = PBXGroup;
+			children = (
+				662507841665FFCE00AC797A /* chuck_fft.c */,
+				662507851665FFCE00AC797A /* chuck_fft.h */,
+				662507861665FFCE00AC797A /* RtAudio.cpp */,
+				662507871665FFCE00AC797A /* RtAudio.h */,
+				662507881665FFCE00AC797A /* RtError.h */,
+				662507891665FFCE00AC797A /* RtMidi.cpp */,
+				6625078A1665FFCE00AC797A /* RtMidi.h */,
+			);
+			name = ThirdParty;
+			path = ../muskit/ThirdParty;
+			sourceTree = "<group>";
+		};
 		663730AA1664B091008555B5 = {
 			isa = PBXGroup;
 			children = (
+				662507681665FFA400AC797A /* muskit */,
 				667118221665FD27005CBAEE /* src */,
 				663730B61664B091008555B5 /* Products */,
 				663730E41665F86D008555B5 /* Frameworks */,
@@ -99,6 +187,8 @@
 				667118231665FD27005CBAEE /* GLstuff.cpp */,
 				667118241665FD27005CBAEE /* GLStuff.h */,
 				667118251665FD27005CBAEE /* main.cpp */,
+				6625079F166605E200AC797A /* Harp.cpp */,
+				662507A0166605E200AC797A /* Harp.h */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -155,6 +245,16 @@
 			files = (
 				667118261665FD27005CBAEE /* GLstuff.cpp in Sources */,
 				667118271665FD27005CBAEE /* main.cpp in Sources */,
+				6625077D1665FFB700AC797A /* AudioClient.cpp in Sources */,
+				6625077E1665FFB700AC797A /* AudioServer.cpp in Sources */,
+				6625077F1665FFB700AC797A /* Interpolators.cpp in Sources */,
+				662507801665FFB700AC797A /* ParameterAPI.cpp in Sources */,
+				662507811665FFB700AC797A /* Waveshaper.cpp in Sources */,
+				662507821665FFB700AC797A /* WindowFunction.cpp in Sources */,
+				6625078B1665FFCE00AC797A /* chuck_fft.c in Sources */,
+				6625078C1665FFCE00AC797A /* RtAudio.cpp in Sources */,
+				6625078D1665FFCE00AC797A /* RtMidi.cpp in Sources */,
+				662507A1166605E200AC797A /* Harp.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -165,7 +265,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -194,7 +294,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -208,6 +308,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -215,6 +316,13 @@
 		663730C01664B091008555B5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					__MACOSX_CORE__,
+				);
+				HEADER_SEARCH_PATHS = "~/muskit/ThirdParty/**";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -222,6 +330,8 @@
 		663730C11664B091008555B5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				HEADER_SEARCH_PATHS = "~/muskit/ThirdParty/**";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
