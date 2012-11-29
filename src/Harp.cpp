@@ -3,19 +3,38 @@
 Harp* Harp::sInstance = NULL;
 
 Harp::Harp()
-: numStrings(10)
+: numStrings(40)
 {
     for (int i = 0; i < numStrings; ++i)
     {
-        p.AddVoice(new Karplus(0.009));
+        strings.push_back(new Karplus(0.009));
+        accumulators.push_back(SampleAccumulator());
+        accumulators.back().SetInput(strings.back());
+        accumulators.back().SetSamplesPerPixel(6);
     }
-    AudioServer::GetInstance()->AddClient(&p, 0);
-    AudioServer::GetInstance()->AddClient(&p, 1);
+
+    for (int i = 0; i < numStrings; ++i)
+    {
+        AudioServer::GetInstance()->AddClient(&accumulators.at(i), 0);
+    }
 }
 
-void Harp::NoteOn(int note, int velocity)
+Harp::~Harp()
 {
-    p.NoteOn(note, velocity);
+    for (int i = 0; i < strings.size(); ++i)
+    {
+        delete strings.at(i);
+    }
+}
+
+void Harp::NoteOn(int num, int note, int velocity)
+{
+    strings.at(num)->NoteOn(note, velocity);
+}
+
+void Harp::ExciteString(int num, int note, int velocity, float* buff, int bufferSize)
+{
+    strings.at(num)->NoteOn(note, velocity, buff, bufferSize);
 }
 
 Harp* Harp::GetInstance()

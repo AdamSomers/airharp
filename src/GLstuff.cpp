@@ -6,7 +6,10 @@
 namespace GLStuff
 {
     
-    const int notes[] = { 32, 34, 37, 39, 41, 44, 46, 49, 51, 53 };
+    //const int notes[] = { 32, 34, 37, 39, 41, 44, 46, 49, 51, 53 };
+    //const int intervals[] = { 0, 2, 5, 7, 9};
+    const int intervals[] = { 0, 2, 4, 5, 7, 9, 11};
+    const int numIntervals = 7;
     
    std::deque<GLDisplay*> gDisplays;
 
@@ -305,7 +308,19 @@ void motionFunc(int x, int y )
                (gMouseOriginX > threshold && x <= threshold))
            {
                printf("trig\n");
-               Harp::GetInstance()->NoteOn(notes[i], 30);
+               int idx = i % numIntervals;
+               int mult = (i / (float)numIntervals);
+               int base = 32 + 12*mult;
+               int note = base + intervals[idx];
+               //Harp::GetInstance()->NoteOn(i, note, 30);
+               int bufferSize = 512;
+               float buffer[bufferSize];
+               memset(buffer, 0, bufferSize);
+               for (int x = 0; x < bufferSize; ++x)
+               {
+                   buffer[x] = x / (float)bufferSize;
+               }
+               Harp::GetInstance()->ExciteString(i, note, 30, buffer, bufferSize);
            }
        }
    }
@@ -330,13 +345,21 @@ void displayFunc( )
     int columnWidth = gWidth / numStrings;
     for (int i = 0; i < numStrings; ++i)
     {
-        int x = (columnWidth * i) + (columnWidth / 2);
+        SampleAccumulator::PeakBuffer peakBuffer = Harp::GetInstance()->GetBuffers().at(i).Get();
+        int numSegments = peakBuffer.size();
+        float segmentLength = gHeight / (float)numSegments;
         glBegin(GL_LINE_LOOP);//start drawing a line loop
-        glVertex2i(x,0);//left of window
-        glVertex2i(x,gHeight);//bottom of window
+        for (int j = 0; j < numSegments; j++)
+        {
+            SampleAccumulator::PeakSample samp = peakBuffer.at(j);
+            float val = fabsf(samp.first) > fabsf(samp.second) ? samp.first : samp.second;
+            int x = (columnWidth * i) + (columnWidth / 2) + val * 5 * columnWidth;
+            glVertex2i(x,segmentLength*j);//left of window
+        }
+        int x = (columnWidth * i) + (columnWidth / 2);
+        //glVertex2i(x,gHeight);
         glEnd();//end drawing of line loop
     }
-
 	glPushMatrix();
 	glTranslatef(gMouseOriginX,gHeight - gMouseOriginY,100);
     glutSolidSphere(100, 100, 100);

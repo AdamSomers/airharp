@@ -5,18 +5,24 @@
 
 //#include "MidiServer.h"
 #include "Voices.h"
+#include "SignalGenerators.h"
 
 class Harp
 {
 public:
     Harp();
-    void NoteOn(int note, int velocity);
+    ~Harp();
+    void NoteOn(int num, int note, int velocity);
+    void ExciteString(int num, int note, int velocity, float* buffer, int bufferSize);
     int GetNumStrings() const { return numStrings; }
     static Harp* GetInstance();
+    std::vector<SampleAccumulator>& GetBuffers() { return accumulators; }
+    std::vector<Karplus*>& GetStrings() { return strings; }
     
 private:
     static Harp* sInstance;
-    Poly p;
+    std::vector<SampleAccumulator> accumulators;
+    std::vector<Karplus*> strings;
     int numStrings;
 };
 
