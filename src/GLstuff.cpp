@@ -316,11 +316,15 @@ void motionFunc(int x, int y )
                int bufferSize = 512;
                float buffer[bufferSize];
                memset(buffer, 0, bufferSize);
+               int midpoint = (gMouseOriginY / (float)gHeight) * bufferSize;
                for (int x = 0; x < bufferSize; ++x)
                {
-                   buffer[x] = x / (float)bufferSize;
+                   if (x < midpoint)
+                       buffer[x] = x / (float)midpoint;
+                   else
+                       buffer[x] = 1.f - (x - midpoint) / (float)(bufferSize - midpoint);
                }
-               Harp::GetInstance()->ExciteString(i, note, 30, buffer, bufferSize);
+               Harp::GetInstance()->ExciteString(i, note, 127, buffer, bufferSize);
            }
        }
    }
@@ -353,7 +357,7 @@ void displayFunc( )
         {
             SampleAccumulator::PeakSample samp = peakBuffer.at(j);
             float val = fabsf(samp.first) > fabsf(samp.second) ? samp.first : samp.second;
-            int x = (columnWidth * i) + (columnWidth / 2) + val * 5 * columnWidth;
+            int x = (columnWidth * i) + (columnWidth / 2) + val * 1 * columnWidth;
             glVertex2i(x,segmentLength*j);//left of window
         }
         int x = (columnWidth * i) + (columnWidth / 2);
