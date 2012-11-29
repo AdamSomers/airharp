@@ -17,6 +17,8 @@
 		6625078C1665FFCE00AC797A /* RtAudio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 662507861665FFCE00AC797A /* RtAudio.cpp */; };
 		6625078D1665FFCE00AC797A /* RtMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 662507891665FFCE00AC797A /* RtMidi.cpp */; };
 		662507A1166605E200AC797A /* Harp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6625079F166605E200AC797A /* Harp.cpp */; };
+		662507A71667583500AC797A /* libLeap.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 662507A61667583500AC797A /* libLeap.dylib */; };
+		662507AC1667620200AC797A /* libLeap.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 662507AB1667620200AC797A /* libLeap.dylib */; };
 		663730C91664B0D6008555B5 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 663730C21664B0D6008555B5 /* OpenGL.framework */; };
 		663730CA1664B0D6008555B5 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 663730C31664B0D6008555B5 /* GLUT.framework */; };
 		663730CB1664B0D6008555B5 /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 663730C41664B0D6008555B5 /* CoreMIDI.framework */; };
@@ -31,12 +33,13 @@
 /* Begin PBXCopyFilesBuildPhase section */
 		663730B31664B091008555B5 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
+			buildActionMask = 12;
+			dstPath = "";
+			dstSubfolderSpec = 16;
 			files = (
+				662507AC1667620200AC797A /* libLeap.dylib in CopyFiles */,
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
@@ -68,6 +71,9 @@
 		6625078A1665FFCE00AC797A /* RtMidi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RtMidi.h; sourceTree = "<group>"; };
 		6625079F166605E200AC797A /* Harp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Harp.cpp; sourceTree = "<group>"; };
 		662507A0166605E200AC797A /* Harp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Harp.h; sourceTree = "<group>"; };
+		662507A61667583500AC797A /* libLeap.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libLeap.dylib; path = ../Leap_SDK/lib/libLeap.dylib; sourceTree = "<group>"; };
+		662507AA1667586F00AC797A /* Leap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Leap.h; path = ../Leap_SDK/include/Leap.h; sourceTree = "<group>"; };
+		662507AB1667620200AC797A /* libLeap.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libLeap.dylib; path = ../Leap_SDK/lib/libLeap.dylib; sourceTree = "<group>"; };
 		663730B51664B091008555B5 /* AirHarp */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = AirHarp; sourceTree = BUILT_PRODUCTS_DIR; };
 		663730C21664B0D6008555B5 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		663730C31664B0D6008555B5 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
@@ -86,6 +92,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				662507A71667583500AC797A /* libLeap.dylib in Frameworks */,
 				663730C91664B0D6008555B5 /* OpenGL.framework in Frameworks */,
 				663730CA1664B0D6008555B5 /* GLUT.framework in Frameworks */,
 				663730CB1664B0D6008555B5 /* CoreMIDI.framework in Frameworks */,
@@ -149,9 +156,19 @@
 			path = ../muskit/ThirdParty;
 			sourceTree = "<group>";
 		};
+		662507A91667586200AC797A /* LeapSDK */ = {
+			isa = PBXGroup;
+			children = (
+				662507AA1667586F00AC797A /* Leap.h */,
+			);
+			name = LeapSDK;
+			sourceTree = "<group>";
+		};
 		663730AA1664B091008555B5 = {
 			isa = PBXGroup;
 			children = (
+				662507AB1667620200AC797A /* libLeap.dylib */,
+				662507A91667586200AC797A /* LeapSDK */,
 				662507681665FFA400AC797A /* muskit */,
 				667118221665FD27005CBAEE /* src */,
 				663730B61664B091008555B5 /* Products */,
@@ -170,6 +187,7 @@
 		663730E41665F86D008555B5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				662507A61667583500AC797A /* libLeap.dylib */,
 				663730C21664B0D6008555B5 /* OpenGL.framework */,
 				663730C31664B0D6008555B5 /* GLUT.framework */,
 				663730C41664B0D6008555B5 /* CoreMIDI.framework */,
@@ -322,8 +340,19 @@
 					"$(inherited)",
 					__MACOSX_CORE__,
 				);
-				HEADER_SEARCH_PATHS = "~/muskit/ThirdParty/**";
+				HEADER_SEARCH_PATHS = (
+					"~/muskit/ThirdParty/**",
+					"~/Leap_SDK/include",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"/Users/adam/Leap_SDK/lib\"",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx10.7;
+				WRAPPER_EXTENSION = "";
 			};
 			name = Debug;
 		};
@@ -331,8 +360,19 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				HEADER_SEARCH_PATHS = "~/muskit/ThirdParty/**";
+				HEADER_SEARCH_PATHS = (
+					"~/muskit/ThirdParty/**",
+					"~/Leap_SDK/include",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"/Users/adam/Leap_SDK/lib\"",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx10.7;
+				WRAPPER_EXTENSION = "";
 			};
 			name = Release;
 		};

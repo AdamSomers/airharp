@@ -3,7 +3,7 @@
 Harp* Harp::sInstance = NULL;
 
 Harp::Harp()
-: numStrings(40)
+: numStrings(15)
 {
     for (int i = 0; i < numStrings; ++i)
     {

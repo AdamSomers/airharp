@@ -3,13 +3,115 @@
 
 #include <cmath>
 
+#include "Leap.h"
+
+#include <iostream>
+
+#define _USE_MATH_DEFINES // To get definition of M_PI
+#include <math.h>
+
+class SampleListener : public Leap::Listener {
+public:
+    virtual void onInit(const Leap::Controller&);
+    virtual void onConnect(const Leap::Controller&);
+    virtual void onDisconnect(const Leap::Controller&);
+    virtual void onFrame(const Leap::Controller&);
+    float xPos;
+    float yPos;
+};
+
+void SampleListener::onInit(const Leap::Controller& controller) {
+    std::cout << "Initialized" << std::endl;
+    xPos = yPos = 0;
+}
+
+void SampleListener::onConnect(const Leap::Controller& controller) {
+    std::cout << "Connected" << std::endl;
+}
+
+void SampleListener::onDisconnect(const Leap::Controller& controller) {
+    std::cout << "Disconnected" << std::endl;
+}
+
+void SampleListener::onFrame(const Leap::Controller& controller) {
+    // Get the most recent frame and report some basic information
+    const Leap::Frame frame = controller.frame();
+    const std::vector<Leap::Hand>& hands = frame.hands();
+    const size_t numHands = hands.size();
+//    std::cout << "Frame id: " << frame.id()
+//    << ", timestamp: " << frame.timestamp()
+//    << ", hands: " << numHands << std::endl;
+    
+    if (numHands >= 1) {
+        // Get the first hand
+        const Leap::Hand& hand = hands[0];
+        
+        // Check if the hand has any fingers
+        const std::vector<Leap::Finger>& fingers = hand.fingers();
+        const size_t numFingers = fingers.size();
+        if (numFingers >= 1) {
+            // Calculate the hand's average finger tip position
+            Leap::Vector pos(0, 0, 0);
+            for (size_t i = 0; i < numFingers; ++i) {
+                const Leap::Finger& finger = fingers[i];
+                const Leap::Ray& tip = finger.tip();
+                pos.x += tip.position.x;
+                pos.y += tip.position.y;
+                pos.z += tip.position.z;
+            }
+            pos = Leap::Vector(pos.x/numFingers, pos.y/numFingers, pos.z/numFingers);
+            xPos = pos.x;
+            yPos = 500 - pos.y;
+            std::cout << "x: " << xPos << " y: " << yPos << std::endl;
+            GLStuff::motionFunc((xPos / 150.f + 0.5) * GLStuff::gWidth, yPos);
+            
+//            std::cout << "Hand has " << numFingers << " fingers with average tip position"
+//            << " (" << pos.x << ", " << pos.y << ", " << pos.z << ")" << std::endl;
+        }
+        
+        // Check if the hand has a palm
+        const Leap::Ray* palmRay = hand.palm();
+        if (palmRay != NULL) {
+            // Get the palm position and wrist direction
+            const Leap::Vector palm = palmRay->position;
+            const Leap::Vector wrist = palmRay->direction;
+//            std::cout << "Palm position: ("
+//            << palm.x << ", " << palm.y << ", " << palm.z << ")" << std::endl;
+            
+            // Check if the hand has a normal vector
+            const Leap::Vector* normal = hand.normal();
+            if (normal != NULL) {
+                // Calculate the hand's pitch, roll, and yaw angles
+                double pitchAngle = -atan2(normal->z, normal->y) * 180/M_PI + 180;
+                double rollAngle = -atan2(normal->x, normal->y) * 180/M_PI + 180;
+                double yawAngle = atan2(wrist.z, wrist.x) * 180/M_PI - 90;
+                // Ensure the angles are between -180 and +180 degrees
+                if (pitchAngle > 180) pitchAngle -= 360;
+                if (rollAngle > 180) rollAngle -= 360;
+                if (yawAngle > 180) yawAngle -= 360;
+//                std::cout << "Pitch: " << pitchAngle << " degrees,  "
+//                << "roll: " << rollAngle << " degrees,  "
+//                << "yaw: " << yawAngle << " degrees" << std::endl;
+            }
+        }
+        
+        // Check if the hand has a ball
+        const Leap::Ball* ball = hand.ball();
+        if (ball != NULL) {
+//            std::cout << "Hand curvature radius: " << ball->radius << " mm" << std::endl;
+        }
+    }
+}
+
+SampleListener listener;
+
 namespace GLStuff
 {
     
     //const int notes[] = { 32, 34, 37, 39, 41, 44, 46, 49, 51, 53 };
-    //const int intervals[] = { 0, 2, 5, 7, 9};
-    const int intervals[] = { 0, 2, 4, 5, 7, 9, 11};
-    const int numIntervals = 7;
+    const int intervals[] = { 0, 2, 5, 7, 9};
+    //const int intervals[] = { 0, 2, 4, 5, 7, 9, 11};
+    const int numIntervals = 5;
     
    std::deque<GLDisplay*> gDisplays;
 
@@ -29,6 +131,8 @@ void UpdateControls()
 
 void GLStartup(int argc, const char** argv)
 {
+    Leap::Controller controller(&listener);
+    
 	std::cout << "Hit q to quit.\n";
  
    g_X = 0.0; g_Y = 0.0; g_ZOOM = 1500; //initial states for the gl_view
@@ -297,7 +401,7 @@ void mouseFunc( int button, int state, int x, int y )
 
 void motionFunc(int x, int y )
 {   
-   if (gLeftButtondown)
+   //if (gLeftButtondown)
    {
        int numStrings = Harp::GetInstance()->GetNumStrings();
        int columnWidth = gWidth / numStrings;
