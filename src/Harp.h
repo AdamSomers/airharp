@@ -28,6 +28,8 @@ private:
     static Harp* sInstance;
     std::vector<SampleAccumulator*> accumulators;
     std::vector<Karplus*> strings;
+    Adder* mixer;
+    Multiplier* outputGain;
     int numStrings;
 };
 

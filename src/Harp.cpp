@@ -6,6 +6,8 @@ Harp* Harp::sInstance = NULL;
 
 Harp::Harp()
 : numStrings(1)
+, mixer(NULL)
+, outputGain(NULL)
 {
     Init();
 }
@@ -26,10 +28,20 @@ void Harp::Init()
         accumulators.back()->SetSamplesPerPixel(6);
     }
     
+    mixer = new Adder;
+    
     for (int i = 0; i < numStrings; ++i)
     {
-        AudioServer::GetInstance()->AddClient(accumulators.at(i), 0);
+        mixer->AddInput(accumulators.at(i));
     }
+    
+    outputGain = new Multiplier;
+    outputGain->SetA(mixer);
+    outputGain->SetVal(1.f/numStrings);
+    
+    AudioServer::GetInstance()->AddClient(outputGain, 0);
+    AudioServer::GetInstance()->AddClient(outputGain, 1);
+
 }
 
 void Harp::Cleanup()
@@ -37,11 +49,19 @@ void Harp::Cleanup()
     for (int i = 0; i < strings.size(); ++i)
     {
         AudioServer::GetInstance()->EnterLock();
-        AudioServer::GetInstance()->RemoveClient(accumulators.at(i), 0);
+        mixer->RemoveInput(accumulators.at(i));
         AudioServer::GetInstance()->ExitLock();
         delete strings.at(i);
         delete accumulators.at(i);
     }
+    if (outputGain) {
+        delete outputGain;
+        AudioServer::GetInstance()->RemoveClient(outputGain, 0);
+        AudioServer::GetInstance()->RemoveClient(outputGain, 1);
+    }
+    if (mixer)
+        delete mixer;
+
     strings.clear();
     accumulators.clear();
 }
@@ -55,8 +75,9 @@ void Harp::AddString()
     accumulators.push_back(new SampleAccumulator());
     accumulators.back()->SetInput(strings.back());
     accumulators.back()->SetSamplesPerPixel(6);
-    AudioServer::GetInstance()->AddClient(accumulators.back(), 0);
+    mixer->AddInput(accumulators.back());
     numStrings++;
+    outputGain->SetVal(1.f/numStrings);
 }
 
 void Harp::RemoveString()
@@ -64,13 +85,14 @@ void Harp::RemoveString()
     if (numStrings == 1)
         return;
     AudioServer::GetInstance()->EnterLock();
-    AudioServer::GetInstance()->RemoveClient(accumulators.back(), 0);
+    mixer->RemoveInput(accumulators.back());
     AudioServer::GetInstance()->ExitLock();
     delete accumulators.back();
     accumulators.pop_back();
     delete strings.back();
     strings.pop_back();
     numStrings--;
+    outputGain->SetVal(1.f/numStrings);
 }
 
 void Harp::NoteOn(int num, int note, int velocity)
