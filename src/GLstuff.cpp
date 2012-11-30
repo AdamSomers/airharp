@@ -61,9 +61,9 @@ void SampleListener::onFrame(const Leap::Controller& controller) {
             }
             pos = Leap::Vector(pos.x/numFingers, pos.y/numFingers, pos.z/numFingers);
             xPos = pos.x;
-            yPos = 500 - pos.y;
+            yPos = (1 - ((pos.y - 50) / 200.f)) * GLStuff::gHeight;
             std::cout << "x: " << xPos << " y: " << yPos << std::endl;
-            GLStuff::motionFunc((xPos / 150.f + 0.5) * GLStuff::gWidth, yPos);
+            GLStuff::airMotion((xPos / 200 + 0.5) * GLStuff::gWidth, yPos, pos.z);
             
 //            std::cout << "Hand has " << numFingers << " fingers with average tip position"
 //            << " (" << pos.x << ", " << pos.y << ", " << pos.z << ")" << std::endl;
@@ -297,6 +297,12 @@ void keyboardFunc( unsigned char key, int x, int y )
 {
    switch( key )
    {
+       case 'a':
+           Harp::GetInstance()->AddString();
+           break;
+        case 'z':
+           Harp::GetInstance()->RemoveString();
+           break;
       case 'f':
 		{
 			if( !gFullscreen )
@@ -398,7 +404,16 @@ void mouseFunc( int button, int state, int x, int y )
    }
    glutPostRedisplay( );
 }
-
+    
+void airMotion(int x, int y, int z)
+{
+    if (z < 25)
+        motionFunc(x, y);
+    gMouseOriginX = x;
+    gMouseOriginY = y;
+}
+    
+    
 void motionFunc(int x, int y )
 {   
    //if (gLeftButtondown)
@@ -408,8 +423,9 @@ void motionFunc(int x, int y )
        for (int i = 0; i < numStrings; ++i)
        {
            int threshold = (columnWidth * i) + (columnWidth / 2);
-           if ((gMouseOriginX <= threshold && x > threshold) ||
-               (gMouseOriginX > threshold && x <= threshold))
+           if (((gMouseOriginX <= threshold && x > threshold) ||
+               (gMouseOriginX > threshold && x <= threshold)) &&
+               abs(x - threshold) < columnWidth / 2)
            {
                printf("trig\n");
                int idx = i % numIntervals;
@@ -453,7 +469,7 @@ void displayFunc( )
     int columnWidth = gWidth / numStrings;
     for (int i = 0; i < numStrings; ++i)
     {
-        SampleAccumulator::PeakBuffer peakBuffer = Harp::GetInstance()->GetBuffers().at(i).Get();
+        SampleAccumulator::PeakBuffer peakBuffer = Harp::GetInstance()->GetBuffers().at(i)->Get();
         int numSegments = peakBuffer.size();
         float segmentLength = gHeight / (float)numSegments;
         glBegin(GL_LINE_LOOP);//start drawing a line loop
@@ -461,7 +477,7 @@ void displayFunc( )
         {
             SampleAccumulator::PeakSample samp = peakBuffer.at(j);
             float val = fabsf(samp.first) > fabsf(samp.second) ? samp.first : samp.second;
-            int x = (columnWidth * i) + (columnWidth / 2) + val * 1 * columnWidth;
+            int x = (columnWidth * i) + (columnWidth / 2) + val * 1 * fmin(columnWidth, 50);
             glVertex2i(x,segmentLength*j);//left of window
         }
         int x = (columnWidth * i) + (columnWidth / 2);

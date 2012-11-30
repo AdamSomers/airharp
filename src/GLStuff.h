@@ -40,6 +40,7 @@ void createcircle (int k, int r, int h);
 void generateBalls();
 GLfloat rand2f( float a, float b );
 void addBall();
+void airMotion(int x, int y, int z);
 
 void go2d();
 void go3d();
