@@ -50,7 +50,7 @@ void Harp::AddString()
 {
     if (numStrings == MAX_STRINGS )
         return;
-
+    
     strings.push_back(new Karplus(0.009));
     accumulators.push_back(new SampleAccumulator());
     accumulators.back()->SetInput(strings.back());
