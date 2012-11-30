@@ -8,7 +8,9 @@
 
 #include <cmath>
 #include <deque>
+#include <map>
 #include <iostream>
+#include <mutex>
 
 #define __PI    3.1415926
 
@@ -17,69 +19,11 @@
 #define SIN(x)  (float) sin( (double) (x) * __PI / 180.0 )
 
 
-class CloudEvent;
+class Finger;
 
 namespace GLStuff
 {
-
-// gl callbacks
-void GLStartup(int argc, const char** argv);
-void idleFunc( );
-void displayFunc( );
-void reshapeFunc( int width, int height );
-void keyboardFunc( unsigned char, int, int );
-void mouseFunc( int button, int state, int x, int y );
-void motionFunc(int x, int y);
-void timerCallback(int v);
-void initialize_graphics( );
-void createMenu(void);
-void menu(int value);
-
-void DrawString(int x,int y, std::string& s, void* font, float scaleFactor = 0.2f);
-void createcircle (int k, int r, int h);
-void generateBalls();
-GLfloat rand2f( float a, float b );
-void addBall();
-void airMotion(int x, int y, int z);
-
-void go2d();
-void go3d();
-
-//-----------------------------------------------------------------------------
-// global variables and #defines
-//-----------------------------------------------------------------------------
-
-static float g_X ;
-static float g_Y ;
-static float g_ZOOM; //initial states for the gl_view
-
-
-// width and height of the window
-static GLsizei gWidth;
-static GLsizei gHeight;
-static GLsizei gLastWidth;
-static GLsizei gLastHeight;
-
-// light 0 position
-static GLfloat g_light0_pos[4];
-
-static GLboolean gDisplay;
-static GLboolean gFullscreen;
-
-static int gBufferSize;
-
-static float gFrameRate;
-static float gRefreshRate;
-
-static int gMenuItem;
-static GLfloat gInc_val_mouse;
-
-static bool gLeftButtondown;
-static int gMouseOriginX;
-static int gMouseOriginY;
-    
-static bool gShowHUD;
-
+   
 class GLDisplay
 {
 public:
@@ -88,7 +32,7 @@ public:
    , fY(y)
    , fW(w)
    , fH(h)
-   , fZ(0)
+   , fZ(10)
    , fR(1.0)
    , fG(0)
    , fB(0)
@@ -109,6 +53,11 @@ public:
    }
    
    virtual void Draw() = 0;
+   
+   void SetX(float x)
+   {
+      fX=x;
+   }
    
    void SetY(float y)
    {
@@ -142,13 +91,90 @@ public:
    
    bool Visible() const { return fVisible; }
    
-protected:
+//protected:
    float fX, fY, fW, fH, fZ, fR, fG, fB, fA;
    bool fVisible;
    float fInitialZAngle;
 };
 
+class Finger : public GLDisplay
+{
+public:
+   Finger()
+   : GLDisplay(0,0,1,1)
+   , invalid(false)
+   {
+   }
+   
+   void Draw()
+   {
+      glutSolidSphere(10, 10, 10);
+   }
+   
+   bool invalid;
+};
 
+// gl callbacks
+void GLStartup(int argc, const char** argv);
+void idleFunc( );
+void displayFunc( );
+void reshapeFunc( int width, int height );
+void keyboardFunc( unsigned char, int, int );
+void mouseFunc( int button, int state, int x, int y );
+void motionFunc(int x, int y);
+void timerCallback(int v);
+void initialize_graphics( );
+void createMenu(void);
+void menu(int value);
+
+void DrawString(int x,int y, std::string& s, void* font, float scaleFactor = 0.2f);
+void createcircle (int k, int r, int h);
+void generateBalls();
+GLfloat rand2f( float a, float b );
+void addBall();
+void airMotion(int x, int y, int z, int prevX, int prevY);
+
+void go2d();
+void go3d();
+   
+static std::map<int, Finger> gFingers;
+static std::mutex gLock;
+
+
+//-----------------------------------------------------------------------------
+// global variables and #defines
+//-----------------------------------------------------------------------------
+   
+static float g_X ;
+static float g_Y ;
+static float g_ZOOM; //initial states for the gl_view
+
+
+// width and height of the window
+static GLsizei gWidth;
+static GLsizei gHeight;
+static GLsizei gLastWidth;
+static GLsizei gLastHeight;
+
+// light 0 position
+static GLfloat g_light0_pos[4];
+
+static GLboolean gDisplay;
+static GLboolean gFullscreen;
+
+static int gBufferSize;
+
+static float gFrameRate;
+static float gRefreshRate;
+
+static int gMenuItem;
+static GLfloat gInc_val_mouse;
+
+static bool gLeftButtondown;
+static int gMouseOriginX;
+static int gMouseOriginY;
+    
+static bool gShowHUD;
 
 }
 
