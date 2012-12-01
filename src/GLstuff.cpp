@@ -82,9 +82,11 @@ void HarpListener::onFrame(const Leap::Controller& controller) {
                     GLStuff::Finger* f = &(*iter).second;
                     int prevX = f->fX;
                     int prevY = f->fY;
-                    f->SetX((tip.position.x / 200 + 0.5) * GLStuff::gWidth);
-                    f->SetY(((tip.position.y - 50) / 200.f) * GLStuff::gHeight);
-                    GLStuff::airMotion((tip.position.x / 200 + 0.5) * GLStuff::gWidth, tip.position.y, tip.position.z, prevX, prevY);
+                    int newX = ((tip.position.x + 200) / 400.f) * GLStuff::gWidth;
+                    int newY = ((tip.position.y - 150) / 200.f) * GLStuff::gHeight;
+                    f->SetX(newX);
+                    f->SetY(newY);
+                    GLStuff::airMotion(newX, newY , tip.position.z, prevX, prevY);
                     
                 }
                 pos = Leap::Vector(pos.x/numFingers, pos.y/numFingers, pos.z/numFingers);
@@ -477,12 +479,16 @@ namespace GLStuff
                     float buffer[bufferSize];
                     memset(buffer, 0, bufferSize);
                     int midpoint = (y / (float)gHeight) * bufferSize;
+                    //std::cout << "gHeight: " << gHeight << " mid: " << y << "\n";
                     for (int x = 0; x < bufferSize; ++x)
                     {
                         if (x < midpoint)
                             buffer[x] = x / (float)midpoint;
                         else
                             buffer[x] = 1.f - (x - midpoint) / (float)(bufferSize - midpoint);
+                        
+                        if (prevX > threshold)
+                            buffer[x] = -buffer[x];
                     }
                     Harp::GetInstance()->ExciteString(i, note, 127, buffer, bufferSize);
                 }
@@ -545,7 +551,7 @@ namespace GLStuff
             glTranslatef((*i).second.fX,(*i).second.fY,100);
             glutSolidSphere(100, 100, 100);
             glTranslatef(-(*i).second.fX,-(*i).second.fY,-100);
-            std::cout << "Displaying finger " << (*i).first << " x: " << (*i).second.fX << " y: " << (*i).second.fY << "\n";
+            //std::cout << "Displaying finger " << (*i).first << " x: " << (*i).second.fX << " y: " << (*i).second.fY << "\n";
         }
         GLStuff::gLock.unlock();
         
