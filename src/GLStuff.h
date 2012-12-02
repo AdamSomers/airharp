@@ -32,7 +32,7 @@ namespace GLStuff
         , fY(y)
         , fW(w)
         , fH(h)
-        , fZ(10)
+        , fZ(100)
         , fR(1.0)
         , fG(0)
         , fB(0)
@@ -44,12 +44,13 @@ namespace GLStuff
         
         void Display()
         {
-            glPushMatrix();
+            //glPushMatrix();
             glTranslatef(fX, fY, fZ);
             glScalef(fW,fH, 1);
             glColor4f(fR, fG, fB, fA);
             Draw();
-            glPopMatrix();
+            glTranslatef(-fX, -fY, -fZ);
+            //glPopMatrix();
         }
         
         virtual void Draw() = 0;
@@ -103,15 +104,34 @@ namespace GLStuff
         Finger()
         : GLDisplay(0,0,1,1)
         , invalid(false)
+        , scaleFactor(.5)
         {
         }
         
         void Draw()
         {
-            glutSolidSphere(10, 10, 10);
+            float scale = fmin(scaleFactor, 1.f);
+            if (scale == 1.f)
+            {
+                glColor4f(1, 0, 0, .8);
+            }
+            else
+            {
+                glColor4f(1, 1, 1, .25);
+            }
+            glutSolidSphere(100, 100, 100);
+
+            glColor4f(.7, .7, .7, scale);
+            float clippedScale = fmin(.85, scale);
+            glScalef(clippedScale, clippedScale, 1);
+            glutSolidSphere(100, 100, 100);
+            glScalef(1/clippedScale,1/clippedScale, 1);
+            
+
         }
         
         bool invalid;
+        float scaleFactor;
     };
     
     // gl callbacks

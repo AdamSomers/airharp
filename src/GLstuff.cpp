@@ -86,6 +86,7 @@ void HarpListener::onFrame(const Leap::Controller& controller) {
                     int newY = ((tip.position.y - 150) / 200.f) * GLStuff::gHeight;
                     f->SetX(newX);
                     f->SetY(newY);
+                    f->scaleFactor = 1 - (tip.position.z / 300.f);
                     GLStuff::airMotion(newX, newY , tip.position.z, prevX, prevY);
                     
                 }
@@ -193,9 +194,9 @@ namespace GLStuff
         gLastWidth = gWidth;
         gLastHeight = gHeight;
         // light 0 position
-        g_light0_pos[0] = 2.0f;
-        g_light0_pos[1] =  8.2f;
-        g_light0_pos[2] = 4.0f;
+        g_light0_pos[0] = 0.0f;
+        g_light0_pos[1] =  0.2f;
+        g_light0_pos[2] = 0.0f;
         g_light0_pos[3] = 1.0f;
         
         gDisplay = true;
@@ -271,18 +272,18 @@ namespace GLStuff
         
         
         // enable lighting
-        glEnable( GL_LIGHTING );
+        //glEnable( GL_LIGHTING );
         // enable lighting for front
-        glLightModeli( GL_FRONT_AND_BACK, GL_TRUE );
+        //glLightModeli( GL_FRONT_AND_BACK, GL_TRUE );
         // material have diffuse and ambient lighting
-        glColorMaterial( GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE );
+        //glColorMaterial( GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE );
         // enable color
         glEnable( GL_COLOR_MATERIAL );
         
         // enable light 0
-        glEnable( GL_LIGHT0 );
+        //glEnable( GL_LIGHT0 );
         // set the position of the lights
-        glLightfv( GL_LIGHT0, GL_POSITION, g_light0_pos );
+        //glLightfv( GL_LIGHT0, GL_POSITION, g_light0_pos );
         
     }
     
@@ -458,7 +459,7 @@ namespace GLStuff
     
     void airMotion(int x, int y, int z, int prevX, int PrevY)
     {
-        if (z < 25)
+        if (z < 0)
         {
             int numStrings = Harp::GetInstance()->GetNumStrings();
             int columnWidth = gWidth / numStrings;
@@ -513,15 +514,18 @@ namespace GLStuff
         // clear the color and depth buffers
         glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
         go2d();
-        
-        glColor4f(1,1,1,1);
-        
+
         glLineWidth(2);
         
         int numStrings = Harp::GetInstance()->GetNumStrings();
         int columnWidth = gWidth / numStrings;
         for (int i = 0; i < numStrings; ++i)
         {
+            if (i % numIntervals == 0)
+                glColor4f(1,.5,.5,1);
+            else
+                glColor4f(.5,.5,.5,1);
+
             SampleAccumulator::PeakBuffer peakBuffer = Harp::GetInstance()->GetBuffers().at(i)->Get();
             int numSegments = peakBuffer.size();
             float segmentLength = gHeight / (float)numSegments;
@@ -547,10 +551,10 @@ namespace GLStuff
             //      glVertex2i(0,0);
             //      glVertex2i((*i).second.fX,(*i).second.fY);
             //      glEnd();
-            //(*i).second.Display();
-            glTranslatef((*i).second.fX,(*i).second.fY,100);
-            glutSolidSphere(100, 100, 100);
-            glTranslatef(-(*i).second.fX,-(*i).second.fY,-100);
+            (*i).second.Display();
+            //glTranslatef((*i).second.fX,(*i).second.fY,100);
+            //glutSolidSphere(100, 100, 100);
+            //glTranslatef(-(*i).second.fX,-(*i).second.fY,-100);
             //std::cout << "Displaying finger " << (*i).first << " x: " << (*i).second.fX << " y: " << (*i).second.fY << "\n";
         }
         GLStuff::gLock.unlock();
