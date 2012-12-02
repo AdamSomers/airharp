@@ -23,6 +23,40 @@ class Finger;
 
 namespace GLStuff
 {
+    //-----------------------------------------------------------------------------
+    // global variables and #defines
+    //-----------------------------------------------------------------------------
+    
+    static float g_X ;
+    static float g_Y ;
+    static float g_ZOOM; //initial states for the gl_view
+    
+    
+    // width and height of the window
+    static GLsizei gWidth;
+    static GLsizei gHeight;
+    static GLsizei gLastWidth;
+    static GLsizei gLastHeight;
+    
+    // light 0 position
+    static GLfloat g_light0_pos[4];
+    
+    static GLboolean gDisplay;
+    static GLboolean gFullscreen;
+    
+    static int gBufferSize;
+    
+    static float gFrameRate;
+    static float gRefreshRate;
+    
+    static int gMenuItem;
+    static GLfloat gInc_val_mouse;
+    
+    static bool gLeftButtondown;
+    static int gMouseOriginX;
+    static int gMouseOriginY;
+    
+    static bool gShowHUD;
     
     class GLDisplay
     {
@@ -32,7 +66,7 @@ namespace GLStuff
         , fY(y)
         , fW(w)
         , fH(h)
-        , fZ(100)
+        , fZ(0.f)
         , fR(1.0)
         , fG(0)
         , fB(0)
@@ -44,13 +78,12 @@ namespace GLStuff
         
         void Display()
         {
-            //glPushMatrix();
+            glPushMatrix();
             glTranslatef(fX, fY, fZ);
             glScalef(fW,fH, 1);
             glColor4f(fR, fG, fB, fA);
             Draw();
-            glTranslatef(-fX, -fY, -fZ);
-            //glPopMatrix();
+            glPopMatrix();
         }
         
         virtual void Draw() = 0;
@@ -110,6 +143,10 @@ namespace GLStuff
         
         void Draw()
         {
+            if (gWidth > gHeight)
+                glScalef(1, gWidth / (float)gHeight, 1);
+            else
+                glScalef(gHeight / (float)gWidth, 1 , 1);
             float scale = fmin(scaleFactor, 1.f);
             if (scale == 1.f)
             {
@@ -119,15 +156,12 @@ namespace GLStuff
             {
                 glColor4f(1, 1, 1, .25);
             }
-            glutSolidSphere(100, 100, 100);
+            glutSolidSphere(.025, 50, 50);
 
             glColor4f(.7, .7, .7, scale);
             float clippedScale = fmin(.85, scale);
             glScalef(clippedScale, clippedScale, 1);
-            glutSolidSphere(100, 100, 100);
-            glScalef(1/clippedScale,1/clippedScale, 1);
-            
-
+            glutSolidSphere(.025, 50, 50);         
         }
         
         bool invalid;
@@ -152,50 +186,13 @@ namespace GLStuff
     void generateBalls();
     GLfloat rand2f( float a, float b );
     void addBall();
-    void airMotion(int x, int y, int z, int prevX, int prevY);
+    void airMotion(float x, float y, float z, float prevX, float prevY);
     
     void go2d();
     void go3d();
     
     static std::map<int, Finger> gFingers;
-    static std::mutex gLock;
-    
-    
-    //-----------------------------------------------------------------------------
-    // global variables and #defines
-    //-----------------------------------------------------------------------------
-    
-    static float g_X ;
-    static float g_Y ;
-    static float g_ZOOM; //initial states for the gl_view
-    
-    
-    // width and height of the window
-    static GLsizei gWidth;
-    static GLsizei gHeight;
-    static GLsizei gLastWidth;
-    static GLsizei gLastHeight;
-    
-    // light 0 position
-    static GLfloat g_light0_pos[4];
-    
-    static GLboolean gDisplay;
-    static GLboolean gFullscreen;
-    
-    static int gBufferSize;
-    
-    static float gFrameRate;
-    static float gRefreshRate;
-    
-    static int gMenuItem;
-    static GLfloat gInc_val_mouse;
-    
-    static bool gLeftButtondown;
-    static int gMouseOriginX;
-    static int gMouseOriginY;
-    
-    static bool gShowHUD;
-    
+    static std::mutex gLock;    
 }
 
 #endif

@@ -3,7 +3,7 @@
 
 int main(int argc, const char** argv)
 {
-    RtAudioDriver driver;    // init rtaudio
+    RtAudioDriver driver(256);    // init rtaudio
     GLStuff::GLStartup(argc, argv);
     std::cout << "byebye!\n";
     return 0;

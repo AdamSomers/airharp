@@ -80,14 +80,14 @@ void HarpListener::onFrame(const Leap::Controller& controller) {
                         (*iter).second.invalid = false;
                     
                     GLStuff::Finger* f = &(*iter).second;
-                    int prevX = f->fX;
-                    int prevY = f->fY;
-                    int newX = ((tip.position.x + 200) / 400.f) * GLStuff::gWidth;
-                    int newY = ((tip.position.y - 150) / 200.f) * GLStuff::gHeight;
+                    float prevX = f->fX;
+                    float prevY = f->fY;
+                    float newX = ((tip.position.x + 200) / 400.f);// * GLStuff::gWidth;
+                    float newY = ((tip.position.y - 150) / 200.f);// * GLStuff::gHeight;
                     f->SetX(newX);
                     f->SetY(newY);
                     f->scaleFactor = 1 - (tip.position.z / 300.f);
-                    GLStuff::airMotion(newX, newY , tip.position.z, prevX, prevY);
+                    GLStuff::airMotion(newX, newY, tip.position.z, prevX , prevY);
                     
                 }
                 pos = Leap::Vector(pos.x/numFingers, pos.y/numFingers, pos.z/numFingers);
@@ -194,15 +194,15 @@ namespace GLStuff
         gLastWidth = gWidth;
         gLastHeight = gHeight;
         // light 0 position
-        g_light0_pos[0] = 0.0f;
-        g_light0_pos[1] =  0.2f;
-        g_light0_pos[2] = 0.0f;
-        g_light0_pos[3] = 1.0f;
+        g_light0_pos[0] = .3f;
+        g_light0_pos[1] =  .24f;
+        g_light0_pos[2] = -1.0f;
+        g_light0_pos[3] = 2.0f;
         
         gDisplay = true;
         gFullscreen = false;
         gBufferSize = 1024;
-        gFrameRate = 40; // frames/sec
+        gFrameRate = 60; // frames/sec
         gRefreshRate = 1000 / gFrameRate; // ms
         gMenuItem = 0;
         gInc_val_mouse = 360 / gFrameRate;
@@ -272,19 +272,18 @@ namespace GLStuff
         
         
         // enable lighting
-        //glEnable( GL_LIGHTING );
+        glEnable( GL_LIGHTING );
         // enable lighting for front
-        //glLightModeli( GL_FRONT_AND_BACK, GL_TRUE );
+        glLightModeli( GL_FRONT_AND_BACK, GL_TRUE );
         // material have diffuse and ambient lighting
-        //glColorMaterial( GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE );
+        glColorMaterial( GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE );
         // enable color
         glEnable( GL_COLOR_MATERIAL );
         
         // enable light 0
-        //glEnable( GL_LIGHT0 );
+        glEnable( GL_LIGHT0 );
         // set the position of the lights
-        //glLightfv( GL_LIGHT0, GL_POSITION, g_light0_pos );
-        
+        glLightfv( GL_LIGHT0, GL_POSITION, g_light0_pos );        
     }
     
     
@@ -300,16 +299,22 @@ namespace GLStuff
         glViewport( 0, 0, w, h );
         // set the matrix mode to project
         glMatrixMode( GL_PROJECTION );
-        // load the identity matrix
+        //// load the identity matrix
         glLoadIdentity( );
         // create the viewing frustum
-        gluPerspective( 45.0, (GLfloat) w / (GLfloat) h, 1.0, 1550.0 );
+        //gluPerspective( 45.f, (GLfloat) w / (GLfloat) h, 1.0, 1 );
         // set the matrix mode to modelview
+//        float aspectRatio = (GLfloat)w / (GLfloat)h;
+//        if (w <= h)
+//            glOrtho (-1, 1.0, -1/aspectRatio, 1/aspectRatio, 1.0, -1.0);
+//        else
+//            glOrtho (-1 * aspectRatio, 1 * aspectRatio, -1, 1, 1.0, -1.0);
+        glOrtho (0, 1.0, 0, 1, 1.0, -1.0);
         glMatrixMode( GL_MODELVIEW );
         // load the identity matrix
         glLoadIdentity( );
         // position the view point
-        gluLookAt( g_X, g_Y, g_ZOOM, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f );
+        //gluLookAt( 0, 0, 0, .5f, .5f, -.5f, 0.0f, 1.0f, 0.0f );
     }
     
     void go2d() {
@@ -457,18 +462,18 @@ namespace GLStuff
         glutPostRedisplay( );
     }
     
-    void airMotion(int x, int y, int z, int prevX, int PrevY)
+    void airMotion(float x, float y, float z, float prevX, float PrevY)
     {
         if (z < 0)
         {
             int numStrings = Harp::GetInstance()->GetNumStrings();
-            int columnWidth = gWidth / numStrings;
+            float columnWidth = 1.f / numStrings;
             for (int i = 0; i < numStrings; ++i)
             {
-                int threshold = (columnWidth * i) + (columnWidth / 2);
+                float threshold = (columnWidth * i) + (columnWidth / 2);
                 if (((prevX <= threshold && x > threshold) ||
                      (prevX > threshold && x <= threshold)) &&
-                    abs(x - threshold) < columnWidth / 2)
+                    fabsf(x - threshold) < columnWidth / 2)
                 {
                     printf("trig\n");
                     int idx = i % numIntervals;
@@ -479,7 +484,7 @@ namespace GLStuff
                     int bufferSize = 512;
                     float buffer[bufferSize];
                     memset(buffer, 0, bufferSize);
-                    int midpoint = (y / (float)gHeight) * bufferSize;
+                    int midpoint = y * bufferSize;
                     //std::cout << "gHeight: " << gHeight << " mid: " << y << "\n";
                     for (int x = 0; x < bufferSize; ++x)
                     {
@@ -513,12 +518,11 @@ namespace GLStuff
         
         // clear the color and depth buffers
         glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-        go2d();
 
         glLineWidth(2);
         
         int numStrings = Harp::GetInstance()->GetNumStrings();
-        int columnWidth = gWidth / numStrings;
+        float columnWidth = 1.f / numStrings;
         for (int i = 0; i < numStrings; ++i)
         {
             if (i % numIntervals == 0)
@@ -528,14 +532,16 @@ namespace GLStuff
 
             SampleAccumulator::PeakBuffer peakBuffer = Harp::GetInstance()->GetBuffers().at(i)->Get();
             int numSegments = peakBuffer.size();
-            float segmentLength = gHeight / (float)numSegments;
+            float segmentLength = 1 / (float)numSegments;
             glBegin(GL_LINE_LOOP);//start drawing a line loop
             for (int j = 0; j < numSegments; j++)
             {
                 SampleAccumulator::PeakSample samp = peakBuffer.at(j);
                 float val = fabsf(samp.first) > fabsf(samp.second) ? samp.first : samp.second;
-                int x = (columnWidth * i) + (columnWidth / 2) + val * 1 * fmin(columnWidth, 50);
-                glVertex2i(x,segmentLength*j);//left of window
+                float cw = columnWidth;
+                float x = (columnWidth * i) + (columnWidth / 2) + val * fmin(columnWidth, .1);
+                
+                glVertex2f(x,segmentLength*j);//left of window
             }
             int x = (columnWidth * i) + (columnWidth / 2);
             //glVertex2i(x,gHeight);
@@ -547,16 +553,8 @@ namespace GLStuff
         GLStuff::gLock.lock();
         for (std::map<int,Finger>::iterator i = gFingers.begin(); i != gFingers.end(); ++i)
         {
-            //      glBegin(GL_LINE_LOOP);
-            //      glVertex2i(0,0);
-            //      glVertex2i((*i).second.fX,(*i).second.fY);
-            //      glEnd();
             (*i).second.Display();
-            //glTranslatef((*i).second.fX,(*i).second.fY,100);
-            //glutSolidSphere(100, 100, 100);
-            //glTranslatef(-(*i).second.fX,-(*i).second.fY,-100);
-            //std::cout << "Displaying finger " << (*i).first << " x: " << (*i).second.fX << " y: " << (*i).second.fY << "\n";
-        }
+         }
         GLStuff::gLock.unlock();
         
         
@@ -570,7 +568,6 @@ namespace GLStuff
             s = "AirHarp 0.0.1";
             DrawString(gWidth - 500, gHeight-20, s, GLUT_BITMAP_TIMES_ROMAN_10, 0.15);
         }
-        
         glFlush( );
         glutSwapBuffers( );
     }
