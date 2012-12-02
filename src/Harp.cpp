@@ -3,6 +3,7 @@
 Harp* Harp::sInstance = NULL;
 
 #define MAX_STRINGS 30
+#define SAMPS_PER_PIXEL 6
 
 Harp::Harp()
 : numStrings(1)
@@ -25,7 +26,7 @@ void Harp::Init()
         strings.push_back(new Karplus(0.009));
         accumulators.push_back(new SampleAccumulator());
         accumulators.back()->SetInput(strings.back());
-        accumulators.back()->SetSamplesPerPixel(6);
+        accumulators.back()->SetSamplesPerPixel(SAMPS_PER_PIXEL);
     }
     
     mixer = new Adder;
@@ -74,8 +75,10 @@ void Harp::AddString()
     strings.push_back(new Karplus(0.009));
     accumulators.push_back(new SampleAccumulator());
     accumulators.back()->SetInput(strings.back());
-    accumulators.back()->SetSamplesPerPixel(6);
+    accumulators.back()->SetSamplesPerPixel(SAMPS_PER_PIXEL);
+    AudioServer::GetInstance()->EnterLock();
     mixer->AddInput(accumulators.back());
+    AudioServer::GetInstance()->ExitLock();
     numStrings++;
     outputGain->SetVal(1.f/numStrings);
 }
