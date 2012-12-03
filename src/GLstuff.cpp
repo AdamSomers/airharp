@@ -150,20 +150,23 @@ HarpListener listener;
 namespace GLStuff
 {
     // Pentatonic Major
-    //const int intervals[] = { 0, 2, 5, 7, 9};
-    //const int numIntervals = 5;
+    const int gPentatonicMajor[] = { 0, 2, 5, 7, 9};
+    const int gPentatonicMajorIntervals = 5;
     
     // Pentatonic Minor
-    const int intervals[] = { 0, 3, 5, 7, 10};
-    const int numIntervals = 5;
+    const int gPentatonicMinor[] = { 0, 3, 5, 7, 10};
+    const int gPentatonicMinorIntervals = 5;
     
-    // Whole-tone Minor
-    //const int intervals[] = { 0, 2, 4, 6, 8, 10};
-    //const int numIntervals = 6;
+    // Whole-tone
+    const int gWholeTone[] = { 0, 2, 4, 6, 8, 10};
+    const int gWholeToneIntervals = 6;
     
-    // Diatonic Major
-    //const int intervals[] = { 0, 2, 4, 5, 7, 9, 11};
-    //const int numIntervals = 7;
+    // Diatonic
+    const int gDiatonic[] = { 0, 2, 4, 5, 7, 9, 11};
+    const int gDiatonicIntervals = 7;
+    
+    const int* gScale = gPentatonicMajor;
+    int gScaleIntervals = gPentatonicMajorIntervals;
     
     std::deque<GLDisplay*> gDisplays;
     
@@ -399,18 +402,26 @@ namespace GLStuff
                 break;
             case '1':
             {
+                gScale = gPentatonicMajor;
+                gScaleIntervals = gPentatonicMajorIntervals;
             }
                 break;
             case '2':
             {
+                gScale = gPentatonicMinor;
+                gScaleIntervals = gPentatonicMinorIntervals;
             }
                 break;
             case '3':
             {
+                gScale = gDiatonic;
+                gScaleIntervals = gDiatonicIntervals;
             }
                 break;
             case '4':
             {
+                gScale = gWholeTone;
+                gScaleIntervals = gWholeToneIntervals;
             }
                 break;
             case 'r':
@@ -476,10 +487,10 @@ namespace GLStuff
                     fabsf(x - threshold) < columnWidth / 2)
                 {
                     printf("trig\n");
-                    int idx = i % numIntervals;
-                    int mult = (i / (float)numIntervals);
+                    int idx = i % gScaleIntervals;
+                    int mult = (i / (float)gScaleIntervals);
                     int base = 32 + 12*mult;
-                    int note = base + intervals[idx];
+                    int note = base + gScale[idx];
                     //Harp::GetInstance()->NoteOn(i, note, 30);
                     int bufferSize = 512;
                     float buffer[bufferSize];
@@ -525,7 +536,7 @@ namespace GLStuff
         float columnWidth = 1.f / numStrings;
         for (int i = 0; i < numStrings; ++i)
         {
-            if (i % numIntervals == 0)
+            if (i % gScaleIntervals == 0)
                 glColor4f(1,.5,.5,1);
             else
                 glColor4f(.5,.5,.5,1);
