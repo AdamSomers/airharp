@@ -38,7 +38,7 @@ void Harp::Init()
     
     outputGain = new Multiplier;
     outputGain->SetA(mixer);
-    outputGain->SetVal(1.f/numStrings);
+    outputGain->SetVal(1/12.f);
     
     AudioServer::GetInstance()->AddClient(outputGain, 0);
     AudioServer::GetInstance()->AddClient(outputGain, 1);
@@ -80,7 +80,7 @@ void Harp::AddString()
     mixer->AddInput(accumulators.back());
     AudioServer::GetInstance()->ExitLock();
     numStrings++;
-    outputGain->SetVal(1.f/numStrings);
+    //outputGain->SetVal(fmax(1.f/numStrings, 1/12.f));
 }
 
 void Harp::RemoveString()
@@ -95,7 +95,7 @@ void Harp::RemoveString()
     delete strings.back();
     strings.pop_back();
     numStrings--;
-    outputGain->SetVal(1.f/numStrings);
+    //outputGain->SetVal(fmax(1.f/numStrings, 1/12.f));
 }
 
 void Harp::NoteOn(int num, int note, int velocity)
